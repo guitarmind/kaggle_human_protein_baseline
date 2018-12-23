@@ -9,7 +9,26 @@ from torch import nn
 import torch.nn.functional as F 
 from sklearn.metrics import f1_score
 from torch.autograd import Variable
-# save best model
+
+
+# Ensure reproducibility #
+
+def set_seeds(rand_seed):
+    torch.manual_seed(rand_seed)
+    torch.cuda.manual_seed(rand_seed)
+    torch.cuda.manual_seed_all(rand_seed)
+
+    # When running on the CuDNN backend
+    # (Deterministic mode can have a performance impact, depending on your model)
+    torch.backends.cudnn.deterministic = True
+    # By default cudnn.benchmark is set to false
+    # https://github.com/soumith/cudnn.torch
+    # torch.backends.cudnn.benchmark = False
+    np.random.seed(rand_seed)
+    random.seed(rand_seed)
+
+
+# Save best model
 def save_checkpoint(state, is_best_loss,is_best_f1,fold):
     filename = config.weights + config.model_name + os.sep +str(fold) + os.sep + "checkpoint.pth.tar"
     torch.save(state, filename)
@@ -18,7 +37,7 @@ def save_checkpoint(state, is_best_loss,is_best_f1,fold):
     if is_best_f1:
         shutil.copyfile(filename,"%s/%s_fold_%s_model_best_f1.pth.tar"%(config.best_models,config.model_name,str(fold)))
 
-# evaluate meters
+# Evaluate meters
 class AverageMeter(object):
     """Computes and stores the average and current value"""
     def __init__(self):
@@ -36,7 +55,7 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
-# print logger
+# Print logger
 class Logger(object):
     def __init__(self):
         self.terminal = sys.stdout  #stdout

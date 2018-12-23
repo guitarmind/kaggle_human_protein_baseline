@@ -7,10 +7,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 from imgaug import augmenters as iaa
 
 # set random seed
-random.seed(2050)
-np.random.seed(2050)
-torch.manual_seed(2050)
-torch.cuda.manual_seed_all(2050)
+set_seeds(2050)
 
 # create dataset class
 class HumanDataset(Dataset):

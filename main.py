@@ -22,13 +22,10 @@ from torch.optim import lr_scheduler
 from sklearn.model_selection import train_test_split
 from timeit import default_timer as timer
 from sklearn.metrics import f1_score
+
 # 1. set random seed
-random.seed(2050)
-np.random.seed(2050)
-torch.manual_seed(2050)
-torch.cuda.manual_seed_all(2050)
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-torch.backends.cudnn.benchmark = True
+set_seeds(2050)
+
 warnings.filterwarnings('ignore')
 
 if not os.path.exists("./logs/"):
