@@ -3,7 +3,8 @@ import sys
 import json
 import torch
 import shutil
-import numpy as np 
+import random
+import numpy as np
 from config import config
 from torch import nn
 import torch.nn.functional as F 
